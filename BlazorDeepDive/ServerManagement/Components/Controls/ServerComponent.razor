@@ -1,9 +1,24 @@
-﻿<div data-name="@server.Name"
-     data-status="Server is @(server.IsOnline?"Online":"Offline")"
-     style="color:@(server.IsOnline?"green":"red")">
-    @server.Name is at @server.City that is @(server.IsOnline?"Online":"Offline")
-</div>
+﻿@if(server != null)
+{
+        <div data-name="@server.Name"
+             data-status="Server is @(server.IsOnline ? "Online" : "Offline")"
+             style="color:@(server.IsOnline ? "green" : "red")">
+            @server.Name is at @server.City that is @(server.IsOnline ? "Online" : "Offline")
+            &nbsp;
+            <button type="button" class="btn-primary" @onclick="ChangeStatus">Turn On / Off</button>
+        </div>
+}
+
 
 @code {
-    private Server server = new Server { Name = "DEV-WA-SRV", City = "New York"};
+
+    private Server? server { get; set; } = new Server { Name = "DEV-WA-SRV", City = "New York" };
+
+    private void ChangeStatus()
+    {
+        if(server != null)
+        {
+            this.server.IsOnline = !this.server.IsOnline;
+        }
+    }
 }
