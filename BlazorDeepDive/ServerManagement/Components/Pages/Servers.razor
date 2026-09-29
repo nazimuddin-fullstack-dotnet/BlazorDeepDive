@@ -24,24 +24,23 @@
 @serverFilter
 <br />
 <ul>
-    @foreach(var server in servers)
-    {
+   <Virtualize Items="this.servers" Context="server">
+
         <li @key="server.ServerId">
-            @server.Name is in @server.City that is 
+            @server.Name is in @server.City that is
             <span style="color:@(server.IsOnline ? "green" : "red")">
                 @(server.IsOnline ? "Online" : "Offline")
             </span>
             &nbsp;
             <a href="/servers/@(server.ServerId)" class="btn btn-link">Edit</a>
             &nbsp;
-            <EditForm
-                Model="server"
-                FormName="@($"form-server-{server.ServerId}")"
-                OnValidSubmit="@(() => {DeleteServer(server.ServerId);})">
+            <EditForm Model="server"
+                      FormName="@($"form-server-{server.ServerId}")"
+                      OnValidSubmit="@(() => {DeleteServer(server.ServerId);})">
                 <button type="submit" class="btn btn-primary">Delete</button>
             </EditForm>
         </li>
-    }
+   </Virtualize>
 </ul>
 <p>
     <a href="servers/add" class="btn btn-primary">Add Server</a>
